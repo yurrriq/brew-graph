@@ -13,26 +13,26 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
--- library
---   hs-source-dirs:      src
---   exposed-modules:     Lib
---   build-depends:       base >= 4.7 && < 5
---                      , optparse-applicative >= 0.13.0 && < 0.14
---                      , graphviz >= 2999.18.1 && < 2999.19
---                      , process >= 1.4.2 && < 1.5
---   default-language:    Haskell2010
+library
+  hs-source-dirs:      src
+  exposed-modules:     Data.Homebrew.Graph
+                     , Data.Homebrew.Graph.Parsers
+                     , Data.Homebrew.Graph.Types
+  build-depends:       base >= 4.7 && < 5
+                     , graphviz >= 2999.18.1 && < 2999.19
+                     , optparse-applicative >= 0.13.0 && < 0.14
+                     , process >= 1.4.2 && < 1.5
+  default-language:    Haskell2010
 
 executable brew-graph
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
-                     , optparse-applicative >= 0.13.0 && < 0.14
-                     , graphviz >= 2999.18.1 && < 2999.19
-                     , process >= 1.4.2 && < 1.5
-                     -- , brew-graph
-                     -- , optparse-applicative
-                     -- , process
+                     , brew-graph
+                     , graphviz
+                     , optparse-applicative
+                     , process
   default-language:    Haskell2010
 
 -- test-suite brew-graph-test
