@@ -8,12 +8,14 @@ Maintainer  : Eric Bailey
 Stability   : experimental
 Portability : portable
 
-Data types modeling @brew-graph@ command-line options.
+Generating directed graphs in the
+<http://www.graphviz.org/content/dot-language GraphViz DOT> format.
 -}
 module Data.Homebrew.Graph.DOT (
-  parseProgDeps,
-  parseAllProgDeps,
-  renderAllProgDeps
+  -- * Type Aliases
+  Prog, Deps,
+  -- * API
+  renderAllProgDeps, parseAllProgDeps, parseProgDeps
   ) where
 
 import           Control.Monad   (foldM, foldM_)
@@ -23,10 +25,15 @@ import qualified Data.Map.Strict as M
 import           Data.Text       (Text, pack)
 import           Text.Dot        (directed, graph, node, renderToStdOut, (-->))
 
+-- | A program's name.
 type Prog = Text
-type Dep  = Text
-type Deps = [Dep]
 
+-- | A list of dependencies.
+type Deps = [Prog]
+
+-- | Render a map from programs to their dependencies as a directed graph in
+-- <http://www.graphviz.org/content/dot-language GraphViz DOT> format and print
+-- it to stdout.
 renderAllProgDeps :: Map Prog Deps -> IO ()
 renderAllProgDeps progDeps =
     renderToStdOut $
@@ -43,10 +50,19 @@ renderAllProgDeps progDeps =
                                     pure (v, M.insert k v m)
                       Just v  -> pure (v, m)
 
-parseProgDeps :: String -> (Prog, Deps)
-parseProgDeps = bimap pack (map pack . words . drop 2) . span (/= ':')
-
+-- | Parse a newline-separated list of strings of the form @"prog: deps ..."@
+-- into a map from programs to their dependencies.
+--
+-- @'parseAllProgDeps' = M.fromList . map 'parseProgDeps' . lines@
 parseAllProgDeps :: String -> Map Prog Deps
 parseAllProgDeps = M.fromList . map parseProgDeps . lines
+
+-- | Parse a string of the form @"prog: deps ..."@ into a pair of a program and
+-- its dependencies.
+--
+-- @'parseProgDeps' "erlang: jpeg libpng libtiff openssl wxmac" ==
+--   ("erlang",["jpeg","libpng","libtiff","openssl","wxmac"])@
+parseProgDeps :: String -> (Prog, Deps)
+parseProgDeps = bimap pack (map pack . words . drop 2) . span (/= ':')
 
 -- --------------------------------------------------------------------- [ EOF ]
