@@ -29,14 +29,14 @@ import Options.Applicative
 
 -- --------------------------------------------------------------------- [ API ]
 
--- | Parser all @brew-graph@ command-lines options.
+-- | Parse all @brew-graph@ command-line options.
 parseOpts :: IO Opts
 parseOpts = flip customExecParser optsParser $
                 prefs $ showHelpOnEmpty <> showHelpOnError
 
 -- ----------------------------------------------------------------- [ Parsers ]
 
--- | The full description of a runnable 'Parser' for a @brew-graph@.
+-- | The full description of a runnable 'Parser' for @brew-graph@.
 optsParser :: ParserInfo Opts
 optsParser =
     info (helper <*> versionOption <*> programOptions)
@@ -62,7 +62,7 @@ argOption = optional $ argument str $
             metavar "FORMULA" <>
             help "Get the dependency graph for FORMULA"
 
--- | Case-insensitive output format, 'DOT' or 'GraphML'. Default: 'DOT'."
+-- | Case-insensitive output format, 'DOT' or 'GraphML'. Default: 'DOT'.
 formatOption :: Parser Format
 formatOption =
     fmap (fromMaybe DOT) . optional $
