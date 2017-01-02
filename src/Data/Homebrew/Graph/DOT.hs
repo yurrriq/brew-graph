@@ -37,7 +37,7 @@ type Deps = [Prog]
 renderAllProgDeps :: Map Prog Deps -> IO ()
 renderAllProgDeps progDeps =
     renderToStdOut $
-    graph directed "Homebrew Dependencies" $
+    graph directed "homebrew" $
     foldM_ outer M.empty (M.toList progDeps)
   where
     outer acc (prog, deps) = do (p, acc') <- upsert prog acc
