@@ -16,10 +16,13 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Data.Homebrew.Graph
+                     , Data.Homebrew.Graph.DOT
                      , Data.Homebrew.Graph.Parsers
                      , Data.Homebrew.Graph.Types
   build-depends:       base >= 4.7 && < 5
+                     , containers >= 0.5.7 && < 0.5.8
                      , haphviz >= 0.2.0.1 && < 0.2.1
+                     , mtl >= 2.2.1 && < 2.3
                      , optparse-applicative >= 0.13.0 && < 0.14
                      , process >= 1.4.2 && < 1.5
                      , text >= 1.2.2 && < 1.3
