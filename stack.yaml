@@ -3,6 +3,7 @@ packages:
 - '.'
 extra-deps:
 - optparse-applicative-0.13.0.0
+- haphviz-0.2.0.1
 flags: {}
 extra-package-dbs: []
 nix:
