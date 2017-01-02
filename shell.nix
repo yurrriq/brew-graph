@@ -16,7 +16,7 @@ let
         libraryHaskellDepends = [
           base containers haphviz mtl optparse-applicative text
         ];
-        executableHaskellDepends = [ base process ];
+        executableHaskellDepends = [ base containers process ];
         homepage = "https://github.com/yurrriq/brew-graph";
         description = "Visualize Homebrew dependencies";
         license = stdenv.lib.licenses.bsd3;
