@@ -38,13 +38,13 @@ renderAllProgDeps :: Map Prog Deps -> IO ()
 renderAllProgDeps progDeps =
     renderToStdOut $
     graph directed "Homebrew Dependencies" $
-    foldM_ bar M.empty (M.toList progDeps)
+    foldM_ outer M.empty (M.toList progDeps)
   where
-    bar acc (prog, deps) = do (p, acc') <- upsert prog acc
-                              foldM (foo p) acc' deps
-    foo p acc dep = do (d, acc') <- upsert dep acc
-                       p --> d
-                       pure acc'
+    outer acc (prog, deps) = do (p, acc') <- upsert prog acc
+                                foldM (inner p) acc' deps
+    inner p acc dep = do (d, acc') <- upsert dep acc
+                         p --> d
+                         pure acc'
     upsert k m = case M.lookup k m of
                       Nothing -> do v <- node k
                                     pure (v, M.insert k v m)
