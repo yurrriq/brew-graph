@@ -17,7 +17,7 @@ module Data.Homebrew.Graph.Parsers (
   -- * Flags
   allFlag, installedFlag,
   -- * Options
-  argOption, formatOption, outputOption, programOptions, versionOption
+  argOption, formatOption, outputOption, programOptions -- , versionOption
   ) where
 
 import Data.Homebrew.Graph.Types
