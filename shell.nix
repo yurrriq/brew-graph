@@ -4,19 +4,19 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, graphviz, optparse-applicative, process
-      , stdenv
+  f = { mkDerivation, base, containers, haphviz, mtl
+      , optparse-applicative, process, stdenv, text
       }:
       mkDerivation {
         pname = "brew-graph";
         version = "0.1.0.0";
         src = ./.;
-        isLibrary = false;
+        isLibrary = true;
         isExecutable = true;
         libraryHaskellDepends = [
-          base graphviz optparse-applicative process
+          base containers haphviz mtl optparse-applicative text
         ];
-        executableHaskellDepends = [ base optparse-applicative process ];
+        executableHaskellDepends = [ base process ];
         homepage = "https://github.com/yurrriq/brew-graph";
         description = "Visualize Homebrew dependencies";
         license = stdenv.lib.licenses.bsd3;
@@ -26,7 +26,9 @@ let
                        then pkgs.haskellPackages
                        else pkgs.haskell.packages.${compiler};
 
-  drv = haskellPackages.callPackage f {};
+  drv = haskellPackages.callPackage f {
+    haphviz = pkgs.haskell.lib.dontCheck haskellPackages.haphviz;
+  };
 
 in
 

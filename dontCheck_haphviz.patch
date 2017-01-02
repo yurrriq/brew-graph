@@ -1,0 +1,11 @@
+diff --git a/shell.nix b/shell.nix
+index ff14509..f8854d9 100644
+--- a/shell.nix
++++ b/shell.nix
+@@ -28,3 +28,5 @@ let
+ 
+-  drv = haskellPackages.callPackage f {};
++  drv = haskellPackages.callPackage f {
++    haphviz = pkgs.haskell.lib.dontCheck haskellPackages.haphviz;
++  };
+ 
